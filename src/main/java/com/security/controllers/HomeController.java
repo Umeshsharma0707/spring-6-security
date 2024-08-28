@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.security.models.Users;
 import com.security.repos.UserRepository;
+import com.security.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -21,6 +22,8 @@ public class HomeController {
 	
 	@Autowired
 	 private UserRepository userRepository;
+	@Autowired
+	private UserService userService;
 	
 	private List<Student> students = new ArrayList<Student>(List.of(
 			new Student(10, "umesh", "50"),
@@ -32,7 +35,7 @@ public class HomeController {
 	
 	@GetMapping("/")
 	public String index() {
-		return "this is a inex page";
+		return "this is a index page";
 		
 	}
 	
@@ -71,5 +74,13 @@ public class HomeController {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		Users save = userRepository.save(user);
 		return save;
+	}
+	
+	@PostMapping("/login")
+	public String login(@RequestBody Users user) {
+		System.out.println(user);
+		 String verify = this.userService.verify(user);
+		 
+		 return verify;
 	}
 }

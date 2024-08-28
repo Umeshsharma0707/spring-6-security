@@ -1,5 +1,7 @@
 package com.security.service;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -26,7 +28,10 @@ public class MyUserDetailsServive implements UserDetailsService{
 			throw new UsernameNotFoundException("user not found");
 		}
 		
-		return new UserPrincipal(user);
+		// return new UserPrincipal(user);
+		
+		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
+                new ArrayList<>()); 
 	}
 
 }
